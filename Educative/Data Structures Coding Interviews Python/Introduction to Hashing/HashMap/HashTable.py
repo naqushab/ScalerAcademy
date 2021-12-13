@@ -1,4 +1,4 @@
-import HashEntry
+from HashEntry import HashEntry
 
 class HashTable:
     """
