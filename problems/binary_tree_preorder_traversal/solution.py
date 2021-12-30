@@ -5,14 +5,26 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def preorder(self, root, ans):
-        if not root:
-            return
-        ans.append(root.val)
-        self.preorder(root.left, ans)
-        self.preorder(root.right, ans)
-
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         ans = []
-        self.preorder(root, ans)
-        return ans
+        def recursive(root):
+            if not root:
+                return
+            ans.append(root.val)
+            recursive(root.left)
+            recursive(root.right)
+        
+        def iterative(root):
+            st = collections.deque()
+            st.append(root)
+            while st:
+                n = st.pop()
+                ans.append(n.val)
+                if n.right:
+                    st.append(n.right)
+                if n.left:
+                    st.append(n.left)
+            return ans
+        
+        # recursive(root)
+        return iterative(root) if root else []
