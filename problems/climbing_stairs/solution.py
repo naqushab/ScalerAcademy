@@ -1,5 +1,5 @@
 class Solution:
-    def climbStairs(self, n: int) -> int:
+    def soln1(self, n):
         if n <= 2:
             return n
         
@@ -14,3 +14,18 @@ class Solution:
             return dp[n]
         
         return dp[n] if n <= 2 else cs(n)
+    
+    @functools.lru_cache(None)
+    def soln2(self, n):
+        if n <= 2:
+            return n
+        return self.soln2(n-1) + self.soln2(n-2)
+    
+    def soln3(self, n):
+        a, b = 0, 1
+        for i in range(n+1):
+            a, b = b, a+b
+        return a
+    
+    def climbStairs(self, n: int) -> int:
+        return self.soln3(n)
