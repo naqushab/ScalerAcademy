@@ -9,17 +9,17 @@ class Solution:
         if not root:
             return []
         q = collections.deque()
-        q.append(root)
+        q.append((root))
         ans = []
         while q:
             ql = len(q)
-            t = []
+            temp = []
             for _ in range(ql):
                 n = q.popleft()
-                t.append(n.val)
+                temp.append(n.val)
                 if n.left:
                     q.append(n.left)
                 if n.right:
                     q.append(n.right)
-            ans.append(t)
+            ans.append(temp)
         return ans
