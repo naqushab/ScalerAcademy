@@ -19,10 +19,9 @@ class Solution:
             st.append(root)
             while st:
                 n = st.pop()
-                ans.append(n.val)
-                if n.right:
+                if n:
+                    ans.append(n.val)
                     st.append(n.right)
-                if n.left:
                     st.append(n.left)
             return ans
         
