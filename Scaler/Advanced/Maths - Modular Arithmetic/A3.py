@@ -1,13 +1,16 @@
-class Solution:
-    # @param A : list of integers
-    # Modify the array A which is passed by reference. 
-    # You do not need to return anything in this case. 
-    def arrange(self, A):
-        n = len(A)
-        # A = [ 4, 0, 2, 1, 3 ] then A = [3, 4, 2, 0, 1]
-        
+import sys
+sys.setrecursionlimit(10**6)
 
-if __name__ == "__main__":
-    s = Solution()
-    A = [ 4, 0, 2, 1, 3 ]
-    print(s.arrange(A))
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @param C : integer
+    # @return an integer
+    def pow(self, A, B, C):
+        if B == 0:
+            return 1 if A != 0 else 0
+        else:
+            if B % 2 == 0:
+                return self.pow((A*A)%C, B//2, C) % C
+            else:
+                return (A * self.pow((A*A)%C, (B-1)//2, C) % C )%C
