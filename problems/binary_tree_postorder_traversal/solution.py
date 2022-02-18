@@ -20,9 +20,9 @@ class Solution:
             while st:
                 n = st.pop()
                 if n:
-                    ans.append(n.val)
+                    ans.insert(0, n.val)
                     st.append(n.left)
                     st.append(n.right)
             return ans
         #recursive(root)
-        return iterative(root)[::-1]
+        return iterative(root)
