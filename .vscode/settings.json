@@ -1,3 +1,4 @@
 {
     "editor.tabSize": 4,
+    "workbench.editor.languageDetection": true,
 }
