@@ -1,17 +1,17 @@
 class Solution:
-	# @param A : list of integers
-	# @return a list of integers
+    # @param A : list of integers
+    # @return a list of integers
     def subUnsort(self, A):
         min_incorrect = float('inf')
         max_incorrect = float('-inf')
         n = len(A)
-        for i in range(n-1):
+        for i in range(n):
+            if i == n-1:
+                return [-1]
             if A[i] <= A[i+1]:
                 continue
             else:
                 break
-            if i == n-1:
-                return [-1]
         
         for i in range(n-1):
             if A[i] <= A[i+1]:
