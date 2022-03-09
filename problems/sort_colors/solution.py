@@ -3,14 +3,15 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        l, m, h = 0, 0, len(nums)-1
-        while m <= h:
-            if nums[m] == 0:
-                nums[l], nums[m] = nums[m], nums[l]
-                l+=1
-                m+=1
-            elif nums[m] == 1:
-                m+=1
-            elif nums[m] == 2:
-                nums[m], nums[h] = nums[h], nums[m]
-                h-=1
+        n = len(nums)
+        start, cur, end = 0, 0, n-1
+        while cur <= end:
+            if nums[cur] == 0:
+                nums[cur], nums[start] = nums[start], nums[cur]
+                cur += 1
+                start += 1
+            elif nums[cur] == 2:
+                nums[cur], nums[end] = nums[end], nums[cur]
+                end -= 1
+            else:
+                cur += 1
