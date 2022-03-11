@@ -1,17 +1,21 @@
 class Solution:
     def reverse(self, x: int) -> int:
-        if x < 0:
-            x = -x
-            s = -1
+        if x == 0 or x == -0:
+            return 0
+        if x > 0:
+            sign = 1
         else:
-            s = 1
-        n = 0
-        lr = -(2**31)//10
-        hr = ((2**31)-1)//10
+            sign = -1
+        x = abs(x)
+        num = 0
+        l_range = -2**31
+        r_range = (2**31)-1
         while x > 0:
-            r = x%10
-            x = x//10
-            if (lr - r) > n or n >= (hr + r) :
+            d = x % 10
+            if (l_range - d)//10 > num or (r_range+d)//10 < num:
                 return 0
-            n = n*10 + r
-        return n*s
+            num = num*10 + d
+            x =  x//10
+        num = num*sign
+        return num
+            
