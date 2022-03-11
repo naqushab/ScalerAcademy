@@ -101,6 +101,38 @@ Input : (1, 5), (2, 5), (4, 6)
 Output : No 
 The points do not lie on a straight line
 ```
+```python
+def collinear_check(p1, p2, p3):
+    x1, y1 = p1
+    x2, y2 = p2
+    x3, y3 = p3
+    if (y2-y1)*(x3-x2) == (y3-y2)*(x2-x1):
+        return 1
+    else:
+        return 0
+```
 
 7. https://leetcode.com/problems/reverse-integer/  
 Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.  
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        if x == 0 or x == -0:
+            return 0
+        if x > 0:
+            sign = 1
+        else:
+            sign = -1
+        x = abs(x)
+        num = 0
+        l_range = -2**31
+        r_range = (2**31)-1
+        while x > 0:
+            d = x % 10
+            if (l_range - d)//10 > num or (r_range+d)//10 < num:
+                return 0
+            num = num*10 + d
+            x =  x//10
+        num = num*sign
+        return num
+```
