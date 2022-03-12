@@ -1,0 +1,19 @@
+name: Sync Leetcode
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 8 * * 6'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Sync
+      uses: joshcai/leetcode-sync@v1.4
+      with:
+        github-token: ${{ github.token }}
+        leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+        leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+        filter-duplicate-secs: 2592000
