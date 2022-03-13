@@ -23,9 +23,9 @@ class UpdateHeavyAPIProcessor:
 class QueryHeavyAPIProcessor:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.prefix_sum_matrix = self._calc_prefix_sum(matrix)
         self.row_num = len(matrix)
         self.col_num = len(matrix[0])
+        self.prefix_sum_matrix = self._calc_prefix_sum(matrix)
 
     def _calc_prefix_sum(self, matrix):
         prefix_sum = [[0 for _ in range(self.col_num)] for _ in range(self.row_num)]
@@ -72,9 +72,9 @@ class QueryHeavyAPIProcessor:
 class EqualLoadAPIProcessor:
     def __init__(self, matrix):
         self.matrix = matrix
-        self.prefix_sum_matrix = self._calc_prefix_sum(matrix)
         self.row_num = len(matrix)
         self.col_num = len(matrix[0])
+        self.prefix_sum_matrix = self._calc_prefix_sum(matrix)
 
     def _calc_prefix_sum(self, matrix):
         prefix_sum = [[0 for _ in range(self.col_num)] for _ in range(self.row_num)]
@@ -89,13 +89,16 @@ class EqualLoadAPIProcessor:
     def update(self, r, c, val):
         self.matrix[r][c] = val
         for i in range(c, self.col_num):
-            self.prefix_sum_matrix[r][i] = self.prefix_sum_matrix[r][i-1] + self.matrix[r][i]
+            if i == 0:
+                self.prefix_sum_matrix[r][i] = self.matrix[r][i]
+            else:
+                self.prefix_sum_matrix[r][i] = self.prefix_sum_matrix[r][i-1] + self.matrix[r][i]
         return
 
     def query(self, r1, c1, r2, c2):
         sub_matrix_sum = 0
         if 0 <= r1 < self.row_num and 0 <= c1 < self.col_num and 0 <= r2 < self.row_num and 0 <= c2 < self.col_num:
-            for r in range(r1, r2):
+            for r in range(r1, r2+1):
                 if c1 == 0:
                     sub_matrix_sum += self.prefix_sum_matrix[r][c2]
                 else:
