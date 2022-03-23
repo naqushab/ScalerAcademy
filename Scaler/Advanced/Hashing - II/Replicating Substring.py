@@ -61,10 +61,9 @@ class Solution:
     # @param B : string
     # @return an integer
     def solve(self, A, B):
-        c = Counter(B)
-        if len(c) != A and len(c) != 1 and A != 1:
-            return -1
-        s = set()
-        for k,v in c.items():
-            s.add(v)
-        return -1 if A!=1 and len(s) > 1 else 1
+        return -1 if any(value % A != 0 for key, value in Counter(B).items()) else 1
+
+if __name__ == '__main__':
+    A = 2
+    B = "bbaabb"
+    print(Solution().solve(A, B))
