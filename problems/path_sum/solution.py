@@ -8,6 +8,20 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
+        return self.dfs(root, targetSum)
+    
+    def dfs(self, A, B):
+        if not A:
+            return False
+        if not A.left and not A.right:
+            return A.val == B
+        l = self.dfs(A.left, B-A.val)
+        r = self.dfs(A.right, B-A.val)
+        return l or r
+    
+    def bfs(self, root, targetSum):
+        if not root:
+            return False
         st = collections.deque()
         st.append((root, targetSum-root.val))
         while st:
