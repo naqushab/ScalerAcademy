@@ -1,7 +1,7 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        m, lm = float('-inf'), 0
-        for n in nums:
-            lm = max(n, lm + n)
-            m = max(m, lm)
-        return m
+        global_max, local_max = -math.inf, 0
+        for num in nums:
+            local_max = max(local_max + num, num)
+            global_max = max(global_max, local_max)
+        return global_max
