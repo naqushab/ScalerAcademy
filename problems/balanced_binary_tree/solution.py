@@ -4,17 +4,19 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+class TreeInfo:
+    def __init__(self, is_bal, height):
+        self.is_bal = is_bal
+        self.height = height
+
 class Solution:
-    def height(self, root):
-        if not root:
-            return 0
-        l = self.height(root.left)
-        r = self.height(root.right)
-        return 1+max(l, r)
-    
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        return self.is_balanced(root).is_bal
+    
+    def is_balanced(self, root):
         if not root:
-            return True
-        height_l = self.height(root.left)
-        height_r = self.height(root.right)
-        return abs(height_l - height_r) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
+            return TreeInfo(True, 0)
+        left = self.is_balanced(root.left)
+        right = self.is_balanced(root.right)
+        return TreeInfo(left.is_bal and right.is_bal and abs(left.height - right.height) <= 1, max(left.height, right.height)+1)
