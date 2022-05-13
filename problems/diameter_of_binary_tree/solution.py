@@ -4,20 +4,19 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+class TreeInfo:
+    def __init__(self, diameter, height):
+        self.diameter = diameter
+        self.height = height
+    
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        max_d = float('-inf')
-        def height(node):
-            if not node:
-                return 0
-            l = node.left
-            r = node.right
-            return max(height(l), height(r)) + 1
-        
-        def diameter(node):
-            if not node:
-                return 0
-            return max(height(node.left)+height(node.right), 
-                      diameter(node.left), diameter(node.right))
-        
-        return diameter(root)
+        return self.diameterOfBinaryTreeUtil(root).diameter
+    
+    def diameterOfBinaryTreeUtil(self, root):
+        if not root:
+            return TreeInfo(0, 0)
+        left = self.diameterOfBinaryTreeUtil(root.left)
+        right = self.diameterOfBinaryTreeUtil(root.right)
+        return TreeInfo(max(left.diameter, right.diameter, left.height + right.height), max(left.height, right.height) + 1 )
