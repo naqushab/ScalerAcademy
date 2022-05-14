@@ -1,52 +1,36 @@
-from collections import deque
-
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        r = len(grid)
-        c = len(grid[0])
-        q = deque()
+        visited = set()
+        r, c = len(grid), len(grid[0])
+        q = collections.deque()
         
-        def bfs(q):
-            t = 0
+        def rot_orange():
+            time = 0
             while q:
                 ql = len(q)
-                change = False
+                rotted = False
                 for _ in range(ql):
-                    ti, tj = q.popleft()
-                    if grid[ti][tj] == 1:
-                        change = True
-                        grid[ti][tj] = 3
-                    if 0 <= ti-1 < r and grid[ti-1][tj] == 1:
-                        q.append((ti-1, tj))
-                    if 0 <= ti+1 < r and grid[ti+1][tj] == 1:
-                        q.append((ti+1, tj))
-                    if 0 <= tj-1 < c and grid[ti][tj-1] == 1:
-                        q.append((ti, tj-1))
-                    if 0 <= tj+1 < c and grid[ti][tj+1] == 1:
-                        q.append((ti, tj+1))
-                if change:
-                    t += 1
-            return t
+                    m, n = q.popleft()
+                    for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                        x, y = m + dx, n + dy
+                        if 0 <= x < r and 0 <= y < c and grid[x][y] == 1 and (x, y) not in visited:
+                            rotted = True
+                            visited.add((x, y))
+                            grid[x][y] = 2
+                            q.append((x, y))
+                if rotted:
+                    time += 1
+            return time
+                            
         
-        def np():
-            for i in range(r):
-                for j in range(c):
-                    if grid[i][j] == 1:
-                        return True
+        for i, j in itertools.product(range(r), range(c)):
+            if grid[i][j] == 2:
+                q.append((i, j))
         
-        for i in range(r):
-            for j in range(c):
-                if grid[i][j] == 2:
-                    q.append((i, j))
-        if not q:
-            if np():
+        time = rot_orange()
+        
+        for i, j in itertools.product(range(r), range(c)):
+            if grid[i][j] == 1:
                 return -1
-            else:
-                return 0
-        
-        ans = bfs(q)
-        
-        if np():
-            return -1
-        
-        return ans
+            
+        return time
