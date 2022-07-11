@@ -1,12 +1,17 @@
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
-        if sum(gas) < sum(cost):
-            return -1
-        n = len(gas)
-        total = start = 0
-        for i in range(n):
-            total += (gas[i]-cost[i])
-            if total < 0:
-                total = 0
-                start = i+1
-        return start
+        total_destinations = len(gas)
+        start_point = 0
+        while start_point < total_destinations:
+            gas_consumed = 0
+            trip_point = 0
+            while trip_point < total_destinations:
+                current_point = (start_point + trip_point) % total_destinations
+                gas_consumed += gas[current_point] - cost[current_point]
+                if gas_consumed < 0:
+                    break
+                trip_point += 1
+            if trip_point == total_destinations:
+                return start_point
+            start_point += trip_point + 1
+        return -1
